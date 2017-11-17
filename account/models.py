@@ -375,9 +375,9 @@ class AccountDeletion(models.Model):
         before = timezone.now() - datetime.timedelta(hours=hours_ago)
         count = 0
         for account_deletion in cls.objects.filter(date_requested__lt=before, user__isnull=False):
-            hookset.account_delete_expunge(account_deletion)
             account_deletion.date_expunged = timezone.now()
             account_deletion.save()
+            hookset.account_delete_expunge(account_deletion)
             count += 1
         return count
 
