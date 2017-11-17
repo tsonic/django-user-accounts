@@ -360,6 +360,7 @@ class EmailConfirmation(models.Model):
 class AccountDeletion(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    username = models.CharField(max_length=150, null=False, default = '0')
     email = models.EmailField(max_length=254)
     date_requested = models.DateTimeField(_("date requested"), default=timezone.now)
     date_expunged = models.DateTimeField(_("date expunged"), null=True, blank=True)
@@ -385,6 +386,7 @@ class AccountDeletion(models.Model):
     def mark(cls, user):
         account_deletion, created = cls.objects.get_or_create(user=user)
         account_deletion.email = user.email
+        account_deletion.username = user.username
         account_deletion.save()
         hookset.account_delete_mark(account_deletion)
         return account_deletion
