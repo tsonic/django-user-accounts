@@ -28,6 +28,7 @@ class Migration(migrations.Migration):
             name='AccountDeletion',
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('username', models.CharField(default='0', max_length=150)),
                 ('email', models.EmailField(max_length=254)),
                 ('date_requested', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date requested')),
                 ('date_expunged', models.DateTimeField(null=True, verbose_name='date expunged', blank=True)),
